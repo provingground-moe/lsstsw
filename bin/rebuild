@@ -18,7 +18,6 @@
 
 set -e
 
-  #statements
 DIR=$(cd "$(dirname "$0")"; pwd)
 # shellcheck disable=SC1090
 . "${DIR}/../etc/settings.cfg.sh"
@@ -100,6 +99,7 @@ fi
 (
   # shellcheck disable=SC1091
   #source activate "$LSST_CONDA_ENV_NAME"
+  # removes since it is not clear why this source is done, since setup.sh shall have already done it
 
   # true if `lsst-build prepare` has run successfully
   PREPARED=false
