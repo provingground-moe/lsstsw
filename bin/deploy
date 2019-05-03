@@ -205,7 +205,7 @@ main() {
   elif [[ $ENVREF != '' ]]; then
     LSST_SPLENV_REF="${ENVREF}"
     # Defining environment name based on the provided SHA1
-    LSST_CONDA_ENV_NAME="${LSST_CONDA_ENV_PREFIX}-${FIXED_ENVREF}"
+    LSST_CONDA_ENV_NAME="scipipe-env-${FIXED_ENVREF}"
   fi
   # the folder where to store locally the environment yaml
   REF_FOLDER_NAME=${LSST_SPLENV_REF//[.\/]/-}
