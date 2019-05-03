@@ -148,15 +148,13 @@ get_branch_tip_hash() {
       echo ":::- Branch ${ENVBREF} invalid!"
       exit
     else
-      echo ":::- Found new environment reference ${reftip} !"
+      echo "::: Found new environment reference ${reftip} !"
     fi
 }
 
 fixnames() {
   FIXED_ENVREF=${ENVREF//[.\/]/-}
   FIXED_ENVBREF=${ENVBREF//[.\/]/-}
-  echo "Fixed ${FIXED_ENVREF}"
-  echo "Fixed ${FIXED_ENVBREF}"
 }
 
 main() {
@@ -212,10 +210,6 @@ main() {
   # the folder where to store locally the environment yaml
   REF_FOLDER_NAME=${LSST_SPLENV_REF//[.\/]/-}
 
-  echo "Ref Name: ${LSST_SPLENV_REF}"
-  echo "Folder name: ${REF_FOLDER_NAME}"
-  echo "Env Name: ${LSST_CONDA_ENV_NAME}"
-
   local conda_packages
   conda_packages="conda${pyver_prefix}_${deploy_mode}-${pkg_postfix}.yml"
 
@@ -228,7 +222,7 @@ main() {
 
   cd env
   if [ -e "${env_file}" ]; then
-    echo ":::  conda environment already present"
+    echo "::: conda environment already present"
   else
     if [[ $FIXED_ENVBREF != '' ]]; then
       # if a branch is provided, store the environment yaml inside the corresponding subfolder
