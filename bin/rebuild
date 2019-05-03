@@ -46,16 +46,19 @@ save_build_env() {
     if [[ $ref == *"."* ]]; then
       ref1=`echo "${ref}" | cut -f 1 -d .`
       ref2=`echo "${ref}" | cut -f 2 -d .`
-      local_env_dir="${DIR}/../env/${ref1}/${ref2}"
+      local_env_dir="${LSSTSW}/env/${ref1}/${ref2}"
     else
-      local_env_dir="${DIR}/../env/${ref}"
+      local_env_dir="${LSSTSW}/env/${ref}"
     fi 
     if [ -d "${local_env_dir}" ]; then
       ref_file=`ls "${local_env_dir}"`
       local_env_file="${local_env_dir}/${ref_file}"
       echo "env_ref_file: ${local_env_file}" >> "${filename}"
       cat "${local_env_file}" | grep -v "^name" > /tmp/renv
+      set +e  # disable set -e for the diff commands.
       sdiff /tmp/lenv1 /tmp/renv >> "${filename}"
+      diff -u /tmp/lenv1 /tmp/renv
+      set -e
     else
       echo "No environment file definition in ${local_env_dir}. Nothing recorded."
     fi

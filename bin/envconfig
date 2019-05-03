@@ -94,6 +94,9 @@ export PATH="$LSSTSW/bin:$PATH"
 
 export MANPATH="$LSSTSW/lfs/share/man:"
 
+# need to activate the miniconda base environment to get the correct list of environments
+source activate "${LSSTSW}/miniconda"
+
 if $INTERACTIVE ; then
   # get the list of available environments
   #ENVS="`conda env list | grep -v ^# | awk -F ' /' '{ print $2 }'`"
