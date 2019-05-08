@@ -10,38 +10,34 @@ print_error() {
   >&2 echo -e "$@"
 }
 
-fail() {
-  local code=${2:-1}
-  [[ -n $1 ]] && print_error "$1"
-  # shellcheck disable=SC2086
-  exit $code
-}
-
 usage() {
   if [[ ! -z "$1" ]]; then
     print_error "$0: $1"
   fi
 
   # note that heredocs are prefixed with tab chars
-  fail "$(cat <<-EOF
+  echo "$(cat <<-EOF
 
-		Usage: $0  [-i] [-e] [-b] [-h]
+		Usage: $0  [-i] [-r] [-b] [-h]
 
 		Specific options:
-		    -i          interactive, propose a list of available environment
-        -e REF      environment name
+        -i          interactive, propose a list of available environment
+        -r REF      environment name
         -b bXXXX    activate the environment already used for the build with id bXXXX
         -h          show this message
 
 		EOF
   )"
+
+  finish=true
+   
 }
 
 parse_args() {
   local OPTIND
   local opt
 
-  while getopts "heib" opt; do
+  while getopts "hrib" opt; do
     case "$opt" in
     b)
       shift;
@@ -53,7 +49,7 @@ parse_args() {
     h)
       usage
       ;;
-    e)
+    r)
       shift;
       ENVREF=$1
       ;;
@@ -72,6 +68,8 @@ ENVREF=""
 BUILD_ID=""
 
 parse_args "$@"
+
+if [[ !$finish ]]; then
 
 
 if [[ -z $ZSH_NAME ]]; then
@@ -146,3 +144,4 @@ setup -r "$LSSTSW/lsst_build"
 echo "notice: lsstsw tools have been set up."
 
 # vim: tabstop=2 shiftwidth=2 expandtab
+fi
