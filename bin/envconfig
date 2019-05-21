@@ -98,8 +98,14 @@ export MANPATH="$LSSTSW/lfs/share/man:"
 source activate "${LSSTSW}/miniconda"
 
 if $INTERACTIVE ; then
+  raw_envs=()
   # get the list of available environments
-  IFS=$'\n' raw_envs=( $( conda env list | grep -v "^#" | grep -v "^ " | grep -v "^base" ) )
+  while IFS=$'\n' read -r line 
+  do 
+    if [[ "$line" != '' ]] ; then
+      raw_envs+=("$line")
+    fi
+  done < <(conda env list | grep -v "^#" | grep -v "^ " | grep -v "^base")
   envs=()
   l=0
   for i in "${raw_envs[@]}"; do
@@ -142,6 +148,7 @@ export LSST_CONDA_ENV_NAME
 export PATH="$LSSTSW/miniconda/envs/$LSST_CONDA_ENV_NAME/bin:$PATH"
 #echo "${PATH}"
 
+# shellcheck disable=SC1090
 . "$LSSTSW/eups/current/bin/setups.$SUFFIX"
 
 setup -r "$LSSTSW/lsst_build"
