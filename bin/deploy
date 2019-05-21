@@ -181,8 +181,9 @@ main() {
     # (try to) get latest branch SHA1 and assign it to LSST_SPLENV_REF
     # if the REF is not a branch (or a tag), the reftip will be empty
     rawreftip=$(git ls-remote https://github.com/lsst/scipipe_conda_env.git ${ENVREF})
-    reftip=$(echo $rawreftip | cut -c1-7)
-    reftype=$(echo $(echo $rawreftip | cut -f 2 -d ' ') | cut -f 2 -d'/')
+    reftip=$(echo "$rawreftip" | cut -c1-7)
+    reftype=$( echo "$rawreftip" | cut -f 2 -d ' ' | cut -f 2 -d'/' )
+    echo ">> $reftype"
     if [ "$reftip" == '' ] || [ "$reftype" == 'tags' ]; then
         # the provided ref is not a branch
         LSST_SPLENV_REF="${ENVREF}"
@@ -204,7 +205,7 @@ main() {
   cd "$LSSTSW"
   # conda environment reference
   local env_url="https://raw.githubusercontent.com/lsst/scipipe_conda_env/${LSST_SPLENV_REF}/etc/"
-  echo $env_url
+  echo "$env_url"
 
   echo "::: conda environment file: ${env_file}"
 
