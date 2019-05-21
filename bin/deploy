@@ -46,7 +46,7 @@ usage() {
 
 		Specific options:
 	    -b          use bleeding edge conda packages
-	    -r REF      github sha1/branch in scipipe_conda_env
+	    -r REF      git ref in scipipe_conda_env (hash, branch, tag)
 	    -3          use Python 3 (default)
 	    -2          use Python 2 (no longer supported -- fatal error)
 	    -h          show this message
@@ -144,6 +144,7 @@ main() {
   ENVREF=""
 
   parse_args "$@"
+  # Create safe directory name from git ref
   FIXED_ENVREF=${ENVREF//[.\/]/-}
 
   mkdir -p "${LSSTSW}"/{sources,build,var/run,var/log,lfs,distserver/production,etc,env}
