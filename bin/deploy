@@ -298,6 +298,7 @@ main() {
   # intentionally outside of a lockfile subshell
   # shellcheck disable=SC1091
   echo "Activating environment ${LSST_CONDA_ENV_NAME}"
+  # shellcheck disable=SC1091
   source activate "${LSST_CONDA_ENV_NAME}"
 
   # report packages in the current conda env
